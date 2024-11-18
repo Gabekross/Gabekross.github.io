@@ -1,0 +1,218 @@
+.container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: pink;
+    box-sizing: border-box;
+    color: white;
+}
+.infocontainer{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+}
+.image-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.image-container img {
+    width: 100px;
+    height: auto;
+}
+.text-container {
+    text-align: center;
+}
+
+.text-container p strong {
+    font-weight: bold;
+    font-style: italic;
+}
+.events-container, .newsfeed-container,.contact-container {
+    padding: 0px;
+}
+.cost-container{
+    width: 50%;
+}
+
+h1 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #000;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.column {
+    flex: 1;
+    margin: 10px;
+    text-align: center;
+    
+}
+
+.column.text {
+    text-align: left;
+    padding: 50px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.image1 {
+    max-width: 100%;
+    height: auto;
+}
+
+.caption {
+    font-size: 14px;
+    margin-top: 5px;
+    text-align: left;
+    padding: auto;
+}
+
+
+ul li {
+    margin-bottom: 5px;
+}
+.link {
+    text-decoration: underline;
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 14px;
+    border-top: 1px solid #ddd;
+}
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background-color: white;
+}
+
+th, td {
+    border: 1px solid #000;
+    padding: 8px 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #d6f5d6; /* Light green background */
+}
+
+.price {
+    color: red; /* Red text for price */
+}
+
+.total-row td {
+    font-weight: bold;
+    background-color: #90ee90; /* Bright green background for total row */
+    color: #000;
+}
+.contact-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.contact-list .icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+/* Hiking styles */
+
+.glacier-section {
+    padding: 20px;
+    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+.glacier-section h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.content-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.image-box {
+    flex: 1; /* Ensures the image boxes take equal space */
+    display: flex; /* Center the image */
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    padding: 10px;
+    box-sizing: border-box; /* Includes padding in width and height */
+}
+
+.image-box img {
+    max-width: 100%; /* Ensure images are responsive */
+    max-height: 100%; /* Prevent images from exceeding the box size */
+    object-fit: cover; /* Ensures the image scales proportionally */
+}
+
+.text-box {
+    flex: 1; /* Ensures the text box takes equal space */
+    border: 2px solid #0d6efd; /* Blue border */
+    background-color: #f9f9f9;
+    padding: 20px;
+    box-sizing: border-box; /* Includes padding in width and height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: justify;
+}
+/* Text Section Styling */
+.text-section {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.text-section p {
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+/* Full-page content styling */
+.pageFull {
+    min-height: 100vh; /* Make the container fill at least the viewport height */
+    display: flex; /* Flexbox ensures content is centered if needed */
+    flex-direction: column; /* Allows vertical stacking */
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+    text-align: justify;
+    border: 1px solid #ddd;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
