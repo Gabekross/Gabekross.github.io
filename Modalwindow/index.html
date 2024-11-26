@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2x2 Modal Layout</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="grid-container">
+
+    <div class="mdl">
+      <img src="images\ralph lauren.jpeg" alt="First Product" class="product-image">
+      <p class="description">Description of the first product</p>
+      <a class="open-modal-btn" href="#openWindow1">Open modal 1</a>
+    </div>
+
+    <div class="mdl">
+             <img src="images\background.png" alt="Second Product" class="product-image">
+      <p class="description">Description of the second product</p>
+      <a class="open-modal-btn" href="#openWindow2">Open modal 2</a>
+    </div>
+    
+    <div class="modal" id="openWindow1">
+      <div class="modal-content">
+        <div class="modal-header">
+            <div class="close-btn">
+                <a href="">X</a>
+            </div>
+          <h1>Modal Window Example</h1>
+        </div>
+        <div class="modal-body">
+          <p class="message-box">
+            This is a paragraph in the message window. This is a paragraph in the message window. This is a paragraph in the message window.
+          </p>
+          <img src="images\ralph lauren.jpeg" alt="" class="modal-image">
+        </div>
+      </div>
+    </div>
+
+    <div class="modal2" id="openWindow2">
+    <div class="modal-content2">
+      <div class="modal-header">
+        <div class="close-btn">
+            <a href="">X</a>
+        </div>
+        <h1>Modal Window Example</h1>
+      </div>
+      <div class="modal-body">
+        <p class="message-box">
+          This is another paragraph in the message window for the second product.
+        </p>
+        <img src="images\background.png" alt="" class="modal-image">     
+      </div>
+    </div>
+  </div>
+</body>
+</html>

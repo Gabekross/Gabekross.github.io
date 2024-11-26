@@ -1,0 +1,160 @@
+/* General Styling */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f9f9f9;
+    
+  }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns layout */
+    gap: 20px; /* Space between items */
+    padding: 30px;
+    width: 100vw; /* Full width */
+    height: 100vh; /* Full height */
+    padding: 20px;
+    box-sizing: border-box; /* Include padding in total width/height */
+
+  }
+  
+  .mdl {
+    height: 50%;
+    border: 2px solid red; 
+    border-radius: 8px;
+    background-color: white;
+    text-align: center;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    
+  }
+ 
+  .product-image,.modal-image {
+    width: 400px; /* Set fixed width */
+    height: 350px; /* Set fixed height */
+    object-fit: cover; /* Ensures the image fits within the box while maintaining aspect ratio */
+    margin-bottom: 15px; /* Space below the image */
+    border-radius: 8px; 
+ }
+  
+  .description {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 15px; 
+  }
+  
+  .open-modal-btn {
+    background-color: orange;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .open-modal-btn:hover {
+    background-color: darkorange;
+  }
+  
+  /* Modal Content */
+.modal-content,.modal-content2 {
+    position: absolute;
+    top:10%;
+    left: 25%;
+    background-color: orange;
+    width: 50%;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    
+  }
+
+    /* Modal Content */
+  .modal-content2 {
+    background-color: rgb(35, 183, 228);
+  }
+  
+  .modal-header {
+    background-color: pink;
+    padding: 0px;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+     
+  }
+  
+  .modal-header h1 {
+    font-size: 20px;
+    color: white;
+    }
+  
+  .close-btn {
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer; 
+    
+  }
+  
+  .modal-body {
+    padding: 20px;
+  }
+  
+  .message-box {
+    background-color: pink;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    color: black;
+  }
+  
+  .modal,.modal2{
+    position:fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(124, 136, 142, 0.9);
+    opacity: 0;
+    pointer-events: none;
+    animation: colorChange 3s infinite alternate; 
+  }
+
+  .modal2{
+    animation: colorChange2 3s infinite alternate; 
+  }
+
+  .modal:target{
+    opacity:1;
+    pointer-events: all;
+  }
+  .modal2:target{
+    opacity:1;
+    pointer-events: all;
+  }
+  
+  @keyframes colorChange {
+    from{
+        background-color: rgba(124, 136, 142, 0.9);
+
+    }
+    to{
+        background-color: rgba(6, 65, 141, 0.9);
+    }
+  
+  }
+
+  @keyframes colorChange2 {
+    from{
+        background-color: rgba(124, 136, 142, 0.9);
+
+    }
+    to{
+        background-color: rgba(27, 143, 12, 0.9);
+    }
+  
+  }
