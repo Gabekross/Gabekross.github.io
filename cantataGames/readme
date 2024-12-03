@@ -10,3 +10,6 @@ Pressing the reset button stops any running timer and resets both displays to 60
 Result
 A "Reset Both Timers" button is added to the controls page.
 Resetting works seamlessly without disrupting the real-time updates to the display page.
+
+
+Website: https://gabekross.github.io/cantataGames/index.html
