@@ -1,30 +1,3 @@
-// // BroadcastChannel for communication
-// const channel = new BroadcastChannel('timer_channel');
-
-// // Listen for updates from the controls page
-// channel.onmessage = (event) => {
-//   const { timerId, value, action , imageSrc} = event.data;
-
-//   // Update the timer display
-//   const displayElement = document.getElementById(`display${timerId}`);
-//   displayElement.textContent = value;
-
-//   // If the action is "subtract", change the background color to red briefly
-//   if (action === "subtract") {
-//     displayElement.style.backgroundColor = "red";
-//     setTimeout(() => {
-//       displayElement.style.backgroundColor = "#e0e0e0"; // Reset to original color
-//     }, 3000); // Duration of the red background
-//   }
-
-//   if (action === "showImage") {
-//     const imageElement = document.getElementById("randomImage");
-//     imageElement.src = imageSrc;
-//     imageElement.style.display = "block";
-//   }
-// };
-
-
 // BroadcastChannel for communication
 const channel = new BroadcastChannel('timer_channel');
 
@@ -43,13 +16,6 @@ channel.onmessage = (event) => {
     displayElement.textContent = value;
   }
 
-  // Display the random image
-  // if (action === "showImage") {
-  //   const imageElement = document.getElementById("randomImage");
-  //   imageElement.src = imageSrc;
-  //   imageElement.style.display = "block";
-  // }
-
   if (action === "showImage") {
     const imageElement = document.getElementById("randomImage");
 
@@ -65,7 +31,6 @@ channel.onmessage = (event) => {
     document.getElementById("answerText").textContent = "";
   }
 
-
   if (action === "hideImage") {
     const imageElement = document.getElementById("randomImage");
     //const answerElement = document.getElementById("answerBox");
@@ -73,11 +38,14 @@ channel.onmessage = (event) => {
     // Hide the image and answer
     imageElement.style.display = "none";
     imageElement.src = ""; // Clear the image source
+
+    const answerBox = document.getElementById("answerBox");
+
     answerBox.style.display = "none";
     document.getElementById("answerText").textContent = "";
 
-    currentImage = null; // Reset the current image and answer tracker
-    currentAnswer = null;
+    // currentImage = null; // Reset the current image and answer tracker
+    // currentAnswer = null;
   }
 
   if (action === "showAnswer") {
@@ -86,7 +54,7 @@ channel.onmessage = (event) => {
 
     // Display the answer box and update the text
     answerBox.style.display = "block";
-    answerText.textContent = currentAnswer;
+    answerText.textContent = currentAnswer || "No answer available";
   }
 
   if (action === "turnRed") {
@@ -107,6 +75,10 @@ channel.onmessage = (event) => {
     const countdownElement = document.getElementById("countdownDisplay");
     countdownElement.textContent = value; // Update the countdown display
     countdownElement.style.display = "block";
+
+        // Hide the animated image when countdown starts
+    const animatedImage = document.getElementById("animatedImage");
+    animatedImage.classList.add("hidden");
     console.log(`Countdown updated: ${value}`);
   }
 

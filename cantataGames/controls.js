@@ -2,18 +2,11 @@
 const channel = new BroadcastChannel('timer_channel');
 
 let intervals = [null, null];
-let timers = [60, 60];
+let timers = [30, 30];
 let currentIndex = 0; // Counter to track the current image index
 let imagesAndAnswers = []; // Array to hold images and answers
+let allowShowAnswerWhileRunning = [false, false]; // Tracks if "Turn Red" is active for each timer
 
-// // Array of image paths and their corresponding answers
-// const imagesAndAnswers = [
-//   { src: "./images/hiking3.jpg", answer: "Answer 1 for Image 1" },
-//   { src: "./images/iceland.jpg", answer: "Answer 2 for Image 2" },
-//   { src: "./images/northern1.jpeg", answer: "Answer 3 for Image 3" },
-//   { src: "./images/image4.jpg", answer: "Answer 4 for Image 4" },
-//   { src: "./images/image5.jpg", answer: "Answer 5 for Image 5" }
-// ];
 
 // Fetch the JSON data
 async function fetchImagesAndAnswers() {
@@ -31,15 +24,14 @@ async function loadCategory(categoryName) {
     const data = await response.json();
     imagesAndAnswers = data[categoryName]; // Extract the specific category
     console.log(`Loaded category: ${categoryName}`, imagesAndAnswers);
+    currentIndex = 0; // Reset index when category changes
   } catch (error) {
     console.error(`Error loading category ${categoryName}:`, error);
   }
 }
 
+// Call the fetch function on load
 
-
-// // Call the fetch function on load
-// fetchImagesAndAnswers();
 loadCategory();
 
 function changeCategory(categoryName) {
@@ -49,13 +41,35 @@ function changeCategory(categoryName) {
   });
 }
 
-
 // Function to send timer updates to the display page
 function updateDisplay(timerId) {
   channel.postMessage({ timerId, value: timers[timerId - 1], action: "update" });
 }
 
 // Function to start a timer and show a random image
+// function startTimer(timerId) {
+//   const otherTimerId = timerId === 1 ? 2 : 1;
+
+//   // Pause the other timer if it's running
+//   pauseTimer(otherTimerId);
+
+//   if (!intervals[timerId - 1]) {
+//     intervals[timerId - 1] = setInterval(() => {
+//       if (timers[timerId - 1] > 0) {
+//         timers[timerId - 1]--;
+//         updateDisplay(timerId);
+//       } else {
+//         clearInterval(intervals[timerId - 1]);
+//         intervals[timerId - 1] = null;
+//       }
+//     }, 1000);
+//   }
+
+//   // Show a image when the timer starts
+//   showSequentialImage();
+// }
+
+
 function startTimer(timerId) {
   const otherTimerId = timerId === 1 ? 2 : 1;
 
@@ -74,10 +88,35 @@ function startTimer(timerId) {
     }, 1000);
   }
 
-  // Show a image when the timer starts
-  // showRandomImage();
+
+    // Get the current image and answer (before incrementing index in showSequentialImage)
+  if (imagesAndAnswers.length > 0) {
+    const currentImage = imagesAndAnswers[currentIndex];
+    const answerBoxId = timerId === 1 ? "player1Answer" : "player2Answer";
+    const answerBox = document.getElementById(answerBoxId);
+  
+      // Update the answer box in controls.html
+     answerBox.textContent = `Answer: ${currentImage.answer}`;
+      console.log(`Answer for Timer ${timerId}: ${currentImage.answer}`);
+  } else {
+      console.warn("No images available to display.");
+  }
+
+  // Show the current image and answer
   showSequentialImage();
+
+  // // Update the answer box in controls.html
+  // const answerBoxId = timerId === 1 ? "player1Answer" : "player2Answer";
+  // const answerBox = document.getElementById(answerBoxId);
+
+  // if (imagesAndAnswers.length > 0) {
+  //   const currentImage = imagesAndAnswers[currentIndex];
+  //   answerBox.textContent = `Answer: ${currentImage.answer}`; // Display the current answer
+  // } else {
+  //   answerBox.textContent = "Answer: No images available";
+  // }
 }
+
 
 
 // Function to pause a timer
@@ -85,55 +124,6 @@ function pauseTimer(timerId) {
   clearInterval(intervals[timerId - 1]);
   intervals[timerId - 1] = null;
 }
-
-// Function to reset both timers
-function resetTimers() {
-  // Pause both timers
-  pauseTimer(1);
-  pauseTimer(2);
-
-  // Reset timers to their initial value
-  timers = [60, 60];
-
-  // Notify the display page to update the timer displays
-  channel.postMessage({ timerId: 1, value: 60, action: "update" });
-  channel.postMessage({ timerId: 2, value: 60, action: "update" });
-    // Hide any displayed image and answer
-  channel.postMessage({ action: "hideImage" });
-
-  console.log("Timers have been reset.");
-}
-
-// Function to make the timer display turn red for 3 seconds
-function turnRed(timerId) {
-  // Notify the display to turn the timer red
-  const audio = new Audio('./sounds/countdown3.mp3');
-  audio.play();
-  channel.postMessage({ action: "turnRed", timerId });
-
-  console.log(`Timer ${timerId} turning red for 3 seconds.`);
-}
-
-// // Updated Function to Show a Random Image
-// function showRandomImage() {
-
-//   if (imagesAndAnswers.length === 0) {
-//     console.warn('No images available to display.');
-//     return;
-//   }
-//   const randomIndex = Math.floor(Math.random() * imagesAndAnswers.length);
-//   const randomImage = imagesAndAnswers[randomIndex];
-
-//   // Notify the display page to show the image and track the current image
-//   channel.postMessage({
-//     action: "showImage",
-//     imageSrc: randomImage.src,
-//     answer: randomImage.answer // Pass the answer for tracking
-//   });
- 
-// }
-
-
 
 function showSequentialImage() {
   if (imagesAndAnswers.length === 0) {
@@ -157,21 +147,73 @@ function showSequentialImage() {
   currentIndex = (currentIndex + 1) % imagesAndAnswers.length;
 }
 
+// Function to make the timer display turn red for 3 seconds
+function turnRed(timerId) {
+  // Allow "Show Answer" to work without pausing the timer
+  allowShowAnswerWhileRunning[timerId - 1] = true;
+  const audioA = new Audio('./sounds/countdown3.mp3');
+  audioA.play();
+  channel.postMessage({ action: "turnRed", timerId });
 
+
+  // Send the show answer action
+  if (imagesAndAnswers.length > 0) {
+    const currentImage = imagesAndAnswers[currentIndex];
+    channel.postMessage({
+      action: "showAnswer",
+      answer: currentImage.answer,
+    });
+    console.log(`Turn Red and Show Answer triggered for Timer ${timerId}`);
+  } else {
+    console.warn("No images available for Turn Red and Show Answer.");
+  }
+  // Clear the red effect after 3 seconds
+  setTimeout(() => {
+    allowShowAnswerWhileRunning[timerId - 1] = false;
+    console.log(`Turn Red effect cleared for Timer ${timerId}.`);
+  }, 3000);
+}
 
 // Function to show the answer corresponding to the current image
 function showAnswer(timerId) {
 
-    // Pause the timer
+  const audio = new Audio('./sounds/correctanswer.mp3');
+  audio.play();
+  if (allowShowAnswerWhileRunning[timerId - 1]) {
+    // During "Turn Red," show the answer without pausing the timer
+    channel.postMessage({ action: "showAnswer" });
+    console.log(`Answer shown for Timer ${timerId} while running (Turn Red active).`);
+    return;
+  }
+
+  // Default behavior: Pause the timer and show the answer
   if (intervals[timerId - 1]) {
     clearInterval(intervals[timerId - 1]);
     intervals[timerId - 1] = null;
   }
-  // Notify the display page to show the answer
   channel.postMessage({ action: "showAnswer" });
-
+  console.log(`Answer shown for Timer ${timerId} after pausing.`);
 }
 
+// Function to reset both timers
+function resetTimers() {
+  pauseTimer(1);
+  pauseTimer(2);
+
+  // Reset timers to their initial value
+  timers = [30, 30];
+
+  // Reset all flags
+  allowShowAnswer = [false, false];
+  allowShowAnswerWhileRunning = [false, false];
+
+  // Notify the display page to update the timer displays
+  channel.postMessage({ timerId: 1, value: 30, action: "update" });
+  channel.postMessage({ timerId: 2, value: 30, action: "update" });
+  //     // Hide any displayed image and answer
+  channel.postMessage({ action: "hideImage" });
+  console.log("Timers have been reset.");
+}
 
 
 // Countdown function
@@ -204,7 +246,10 @@ function triggerCountdown() {
   console.log("Countdown triggered.");
   startCountdown(); // Start the countdown
 }
-
+function triggerReset() {
+  console.log("Reset action triggered.");
+  channel.postMessage({ action: "resetDisplay" }); // Send reset message
+}
 
 
 
