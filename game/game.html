@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess My Number</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>GUESS MY NUMBER</h1>
+        <p>Guess the number between 1 and 100</p>
+
+        <div class="score-board">
+            <div class="score">Score: <span id="score">10</span></div>
+            <div class="high-score">High Score: <span id="high-score">0</span></div>
+        </div>
+
+        <div class="game-box">
+            <div class="guess-box">
+                <img src="images/santa7.jpg" alt="Player Icon">
+                <input type="number" id="guess-input" placeholder="Guess a number">
+                <button id="check-btn">Check</button>
+            </div>
+            <p id="feedback">Guess a Number</p>
+        </div>
+
+        <button id="reset-btn" class="reset-btn">Reset</button>
+
+        <div class="history-box">
+            <h3>Guess History</h3>
+            <ul id="guess-history"></ul>
+        </div>
+    </div>
+    <div class="modal hidden" id="win-modal">s
+        <div class="modal-content">
+            <h2>🎉🎉🎉 YOU WIN 🎉🎉🎉</h2>
+            <p>Congratulations! Your guess was correct.</p>
+            <p><span id="correct-number"></span> is my secret number.</p>
+            <p>Your Score: <span id="final-score"></span></p>
+            <p>Best: <span id="best-score"></span></p>
+            <button id="play-again-btn">Play Again</button>
+        </div>
+    </div>
+    <!-- Game Over Modal -->
+<div class="modal hidden" id="game-over-modal">
+    <div class="modal-content2">
+        <h2>💀 GAME OVER 💀</h2>
+        <p>Unfortunately, You Lost the Game.</p>
+        <p>Don't give up and try again. You can win next time!</p>
+        <p>My number was: <span id="lost-number"></span></p>
+        <button id="try-again-btn">Try Again</button>
+    </div>
+</div>
+
+    
+    <script src="control.js"></script>
+</body>
+</html>
